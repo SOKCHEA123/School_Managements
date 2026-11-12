@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* ប្រើ Inter សម្រាប់អង់គ្លេស និង Kantumruy Pro សម្រាប់ខ្មែរ */
+    font-family: 'Inter', 'Kantumruy Pro', sans-serif;
+    -webkit-font-smoothing: antialiased; /* ជួយឱ្យអក្សររលោងស្អាត */
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

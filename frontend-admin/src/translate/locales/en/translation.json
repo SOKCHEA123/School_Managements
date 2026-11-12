@@ -1,0 +1,26 @@
+{
+  "admin_portal": "Admin Portal",
+  "school_name": "Hun Sen Snoul High School",
+  "email_or_username": "Email or Username",
+  "password": "Password",
+  "login_btn": "Login",
+  "verifying": "Verifying...",
+  "no_account": "Don't have an account?",
+  "register_here": "Register here",
+  "copyright": "All rights reserved.",
+  
+  "admin_registration": "Admin Registration",
+  "register_subtitle": "Register a school management account",
+  "full_name": "Full Name",
+  "email": "Email",
+  "confirm_password": "Confirm Password",
+  "placeholder_name": "e.g. Sok Chea",
+  "placeholder_password": "At least 6 characters",
+  "placeholder_confirm_password": "Re-enter password",
+  "creating_account": "Creating account...",
+  "register_btn": "Register",
+  "already_have_account": "Already have an account?",
+  "password_min_length": "Password must be at least 6 characters",
+  "password_mismatch": "Passwords do not match",
+  "registration_failed": "Registration failed"
+}

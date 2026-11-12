@@ -1,0 +1,26 @@
+{
+  "admin_portal": "ផតថលអ្នកគ្រប់គ្រង",
+  "school_name": "វិទ្យាល័យ ហ៊ុន សែន ស្នួល",
+  "email_or_username": "អ៊ីមែល ឬ ឈ្មោះអ្នកប្រើប្រាស់",
+  "password": "លេខសម្ងាត់",
+  "login_btn": "ចូលប្រព័ន្ធ ",
+  "verifying": "កំពុងផ្ទៀងផ្ទាត់...",
+  "no_account": "មិនទាន់មានគណនី?",
+  "register_here": "ចុះឈ្មោះនៅទីនេះ ",
+  "copyright": "រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ",
+
+  "admin_registration": "ការចុះឈ្មោះអ្នកគ្រប់គ្រង",
+  "register_subtitle": "ចុះឈ្មោះគណនីគ្រប់គ្រងសាលារៀន",
+  "full_name": "ឈ្មោះពេញ",
+  "email": "អុីមែល",
+  "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
+  "placeholder_name": "ឧ. Sok Chea",
+  "placeholder_password": "យ៉ាងតិច ៦ តួអក្សរ",
+  "placeholder_confirm_password": "បញ្ចូលពាក្យសម្ងាត់ម្តងទៀត",
+  "creating_account": "កំពុងបង្កើតគណនី...",
+  "register_btn": "ចុះឈ្មោះ (Register)",
+  "already_have_account": "មានគណនីរួចហើយ?",
+  "password_min_length": "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ",
+  "password_mismatch": "ពាក្យសម្ងាត់បញ្ជាក់មិនត្រូវគ្នាទេ",
+  "registration_failed": "ការចុះឈ្មោះបានបរាជ័យ"
+}

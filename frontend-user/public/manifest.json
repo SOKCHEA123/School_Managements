@@ -1,0 +1,15 @@
+{
+  "short_name": "HS Snoul",
+  "name": "Hun Sen Snoul High School",
+  "icons": [
+    {
+      "src": "Logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff"
+}
