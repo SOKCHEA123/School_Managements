@@ -1,0 +1,10 @@
+export { default as AllStudents } from './AllStudents';
+export { default as Students } from './AllStudents';
+export { default as StudentPromotion } from './StudentPromotion';
+export { default as StudentTransfer } from './StudentTransfer';
+export { default as StudentDiscipline } from './StudentDiscipline';
+export { default as StudentCertificates } from './StudentCertificates';
+export { default as StudentDocuments } from './StudentDocuments';
+export { default as InputStudent } from './InputStudent';
+export { default as EditStudent } from './EditStudent';
+export { default as DeleteStudent } from './DeleteStudent';

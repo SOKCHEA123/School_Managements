@@ -3,21 +3,29 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/auth/login/Login';
 import Register from './pages/auth/register/Register';
 import Dashboard from './pages/dashboard/Dashboard';
-import Students from './pages/student/Students';
-import Teachers from './pages/teacher/Teachers';
-import Parents from './pages/academic/Parents';
-import Attendance from './pages/attendance/Attendance';
-import Timetable from './pages/timetable/Timetable';
-import Exams from './pages/exam/Exams';
-import Grades from './pages/Grades';
-import Academics from './pages/Academics';
-import StudentServices from './pages/service/StudentServices';
-import Finance from './pages/finance/Finance';
-import Library from './pages/library/Library';
-import Communication from './pages/communication/Communication';
-import Reports from './pages/report/Reports';
-import Security from './pages/security/Security';
-import Settings from './pages/settings/Settings';
+
+// Management Modules
+import {
+  AllStudents,
+  StudentPromotion,
+  StudentTransfer,
+  StudentDiscipline,
+  StudentCertificates,
+  StudentDocuments,
+} from './pages/managementstudent';
+import { Teachers, TeacherAttendance, TeacherTimetable } from './pages/managementteacher';
+import { Parents, ParentCommunication } from './pages/managementparent';
+import { Academics } from './pages/managementacademic';
+import { Attendance } from './pages/managementattendance';
+import { Timetable } from './pages/managementtimetable';
+import { Exams, EnterScores } from './pages/managementexam';
+import { Finance } from './pages/managementfinance';
+import { Library } from './pages/managementlibrary';
+import { Communication } from './pages/managementcommunication';
+import { Reports } from './pages/managementreport';
+import { Security } from './pages/managementsecurity';
+import { Settings } from './pages/managementsettings';
+
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminLayout from './components/layout/AdminLayout';
 import { AppProvider } from './context/AppContext';
@@ -35,27 +43,43 @@ function App() {
             {/* 1. Dashboard */}
             <Route path="/dashboard" element={<Dashboard />} />
 
-            {/* 2. Academic Management */}
-            <Route path="/students" element={<Students />} />
+            {/* 2. Management Student */}
+            <Route path="/students" element={<AllStudents />} />
+            <Route path="/students/all" element={<AllStudents />} />
+            <Route path="/students/promotion" element={<StudentPromotion />} />
+            <Route path="/students/transfer" element={<StudentTransfer />} />
+            <Route path="/students/discipline" element={<StudentDiscipline />} />
+            <Route path="/students/certificates" element={<StudentCertificates />} />
+            <Route path="/students/documents" element={<StudentDocuments />} />
+            <Route path="/services" element={<StudentPromotion />} />
+
+            {/* 3. Management Teacher & Parents */}
             <Route path="/teachers" element={<Teachers />} />
+            <Route path="/teachers/all" element={<Teachers />} />
+            <Route path="/teachers/attendance" element={<TeacherAttendance />} />
+            <Route path="/teachers/timetable" element={<TeacherTimetable />} />
+
             <Route path="/parents" element={<Parents />} />
+            <Route path="/parents/all" element={<Parents />} />
+            <Route path="/parents/communication" element={<ParentCommunication />} />
+
+            {/* 4. Management Academic Structure */}
             <Route path="/academics" element={<Academics />} />
 
-            {/* 3. Attendance & Timetable */}
+            {/* 5. Management Attendance & Timetable */}
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/timetable" element={<Timetable />} />
 
-            {/* 4. Examination & Results */}
+            {/* 6. Management Exam & Scores */}
             <Route path="/exams" element={<Exams />} />
-            <Route path="/grades" element={<Grades />} />
+            <Route path="/grades" element={<EnterScores />} />
 
-            {/* 5. Student Services & Operations */}
-            <Route path="/services" element={<StudentServices />} />
+            {/* 7. Management Finance, Library & Communication */}
             <Route path="/finance" element={<Finance />} />
             <Route path="/library" element={<Library />} />
             <Route path="/communication" element={<Communication />} />
 
-            {/* 6. Reports, Security & Settings */}
+            {/* 8. Management Reports, Security & Settings */}
             <Route path="/reports" element={<Reports />} />
             <Route path="/security" element={<Security />} />
             <Route path="/settings" element={<Settings />} />
