@@ -219,7 +219,7 @@ const Header = ({
   const isLoginActive = activeTab === 'login' || activeTab === 'my-grades' || activeTab === 'student-login' || activeTab === 'grades';
 
   const homeIcon = (isActive) => (
-    <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+    <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isActive ? 'text-white scale-110' : 'text-sky-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
     </svg>
   );
@@ -356,12 +356,12 @@ const Header = ({
     </div>
   );
 
-  const aboutIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isAboutActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>;
-  const admissionsIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isAdmissionsActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>;
-  const academicsIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isAcademicsActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>;
-  const newsIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isNewsActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>;
-  const activitiesIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isActivitiesActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>;
-  const contactIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isContactActive ? 'text-white scale-110' : 'text-primary-200/80'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>;
+  const aboutIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isAboutActive ? 'text-white scale-110' : 'text-cyan-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>;
+  const admissionsIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isAdmissionsActive ? 'text-white scale-110' : 'text-amber-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>;
+  const academicsIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isAcademicsActive ? 'text-white scale-110' : 'text-emerald-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>;
+  const newsIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isNewsActive ? 'text-white scale-110' : 'text-violet-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>;
+  const activitiesIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isActivitiesActive ? 'text-white scale-110' : 'text-pink-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>;
+  const contactIcon = <svg className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isContactActive ? 'text-white scale-110' : 'text-rose-300'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>;
 
   return (
     <>
@@ -523,7 +523,7 @@ const Header = ({
                 <button type="button" onClick={handleLoginClick} className={`flex items-center gap-2 px-6 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer ml-2 active:scale-95
                   ${isLoginActive
                     ? 'bg-gradient-to-br from-primary-400 to-primary-600 text-white ring-2 ring-primary-300/50 scale-105 shadow-[0_0_25px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.4)]'
-                    : 'bg-gradient-to-br from-white to-slate-200 text-primary-950 hover:from-primary-50 hover:to-primary-100 hover:scale-105 shadow-[0_6px_20px_-4px_rgba(255,255,255,0.3),inset_0_1px_0_rgba(255,255,255,0.9)] hover:shadow-[0_8px_25px_-4px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.9)]'
+                    : 'bg-gradient-to-br from-white to-slate-200 text-slate-900 hover:from-primary-50 hover:to-primary-100 hover:scale-105 shadow-[0_6px_20px_-4px_rgba(255,255,255,0.3),inset_0_1px_0_rgba(255,255,255,0.9)] hover:shadow-[0_8px_25px_-4px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.9)]'
                   }`} title={t.loginSubtitle || (lang === 'KH' ? 'ចូលមើលពិន្ទុសិស្ស' : 'View student grades')}>
                   {loginIcon(isLoginActive)}
                   <span>{t.login || (lang === 'KH' ? 'ចូលប្រើ' : 'Login')}</span>
@@ -632,7 +632,7 @@ const Header = ({
 
             {!isLoggedIn && (
               <button type="button" onClick={handleLoginClick} className="w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl text-base font-bold transition-all duration-300 mt-6 active:scale-95
-                text-primary-950 bg-gradient-to-br from-white to-slate-200 hover:from-primary-50 hover:to-primary-100
+                text-slate-900 bg-gradient-to-br from-white to-slate-200 hover:from-primary-50 hover:to-primary-100
                 shadow-[0_8px_25px_-4px_rgba(255,255,255,0.3),inset_0_1px_0_rgba(255,255,255,0.9)]
                 hover:shadow-[0_10px_30px_-4px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.9)]">
                 {loginIcon(isLoginActive, 'w-5 h-5')}

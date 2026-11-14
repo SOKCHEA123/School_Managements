@@ -15,8 +15,8 @@ const Academic = ({ lang }) => {
       desc: t.middleSchoolDesc,
       points: t.middleSchoolPoints,
       isFeatured: false,
-      cardBg: 'bg-white dark:bg-gray-800/80 border border-gray-100 dark:border-gray-700/80 shadow-sm hover:shadow-2xl hover:border-blue-500/30 dark:hover:border-blue-400/30',
-      iconBg: 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400',
+      cardBg: 'bg-gradient-to-br from-blue-900 via-blue-950 to-indigo-950 text-white shadow-2xl shadow-blue-900/30 border border-blue-500/30 hover:scale-[1.02]',
+      iconBg: 'bg-white text-blue-600',
       badgeColor: '',
       checkColor: 'text-blue-600 dark:text-blue-400 font-bold',
       icon: (
@@ -47,8 +47,8 @@ const Academic = ({ lang }) => {
       desc: t.socialDesc,
       points: t.socialPoints,
       isFeatured: false,
-      cardBg: 'bg-white dark:bg-gray-800/80 border border-gray-100 dark:border-gray-700/80 shadow-sm hover:shadow-2xl hover:border-amber-500/30 dark:hover:border-amber-400/30',
-      iconBg: 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400',
+      cardBg: 'bg-gradient-to-br from-blue-900 via-blue-950 to-indigo-950 text-white shadow-2xl shadow-blue-900/30 border border-blue-500/30 hover:scale-[1.02]',
+      iconBg: 'bg-amber-50 text-amber-600',
       badgeColor: '',
       checkColor: 'text-amber-600 dark:text-amber-400 font-bold',
       icon: (
@@ -103,21 +103,21 @@ const Academic = ({ lang }) => {
                 </div>
 
                 {/* ចំណងជើង និងកម្រិតថ្នាក់ */}
-                <h3 className={`text-xl sm:text-2xl font-bold mb-2 ${card.isFeatured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white">
                   {card.title}
                 </h3>
-                <p className={`text-xs sm:text-sm font-semibold mb-3 sm:mb-4 ${card.isFeatured ? 'text-amber-300' : 'text-primary dark:text-primary'}`}>
+                <p className="text-xs sm:text-sm font-semibold mb-3 sm:mb-4 text-amber-300">
                   {card.grades}
                 </p>
 
                 {/* ការពិពណ៌នា */}
-                <p className={`text-xs sm:text-sm lg:text-base leading-relaxed mb-6 sm:mb-8 ${card.isFeatured ? 'text-gray-200' : 'text-gray-600 dark:text-gray-300'}`}>
+                <p className="text-xs sm:text-sm lg:text-base leading-relaxed mb-6 sm:mb-8 text-gray-200">
                   {card.desc}
                 </p>
               </div>
 
               {/* បញ្ជីចំណុចសំខាន់ៗ (Points List) */}
-              <ul className={`space-y-2.5 sm:space-y-3 text-xs sm:text-sm lg:text-base pt-5 sm:pt-6 border-t ${card.isFeatured ? 'text-gray-200 border-white/15' : 'text-gray-700 dark:text-gray-300 border-gray-100 dark:border-gray-700/80'}`}>
+              <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm lg:text-base pt-5 sm:pt-6 border-t text-gray-200 border-white/15">
                 {Array.isArray(card.points) && card.points.map((point, idx) => (
                   <li key={idx} className="flex items-start space-x-2.5 sm:space-x-3">
                     <span className={`mt-0.5 text-sm sm:text-base ${card.checkColor}`}>✓</span>
