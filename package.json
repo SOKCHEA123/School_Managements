@@ -6,9 +6,6 @@
   "scripts": {
     "postinstall": "cd frontend-admin && npm install && npm run build",
     "build": "cd frontend-admin && npm install && npm run build",
-    "start": "npx serve -s frontend-admin/build -l 10000"
-  },
-  "dependencies": {
-    "serve": "^14.2.4"
+    "start": "node server.js"
   }
 }
