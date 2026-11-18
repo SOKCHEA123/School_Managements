@@ -18,9 +18,10 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6',
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|string|email|max:255|unique:users,email',
+            'student_id' => 'nullable|string|unique:users,student_id', // បន្ថែម student_id បើចង់
+            'password'   => 'required|string|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -36,6 +37,11 @@ class AuthController extends Controller
             'email'    => strtolower(trim($request->email)),
             'password' => Hash::make($request->password),
         ];
+
+        // បន្ថែម student_id ប្រសិនបើមានបញ្ជូនមក
+        if ($request->has('student_id')) {
+            $userData['student_id'] = $request->student_id;
+        }
 
         // បំពេញ Field បន្ថែមប្រសិនបើមានពិតប្រាកដក្នុង Table users
         try {
@@ -63,7 +69,6 @@ class AuthController extends Controller
             }
         }
 
-        // បង្កើត Token ភ្លាមៗដើម្បីឱ្យអាច Login ដោយស្វ័យប្រវត្តិ
         $token = $user->createToken('auth-token')->plainTextToken;
 
         $roles = method_exists($user, 'getRoleNames') ? $user->getRoleNames() : [];
@@ -76,6 +81,7 @@ class AuthController extends Controller
             'user'         => [
                 'id'          => $user->id,
                 'name'        => $user->name,
+                'student_id'  => $user->student_id ?? null, // បង្ហាញ student_id
                 'username'    => $user->username ?? $user->name,
                 'email'       => $user->email,
                 'user_type'   => $user->user_type ?? 'admin',
@@ -90,7 +96,13 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        $loginInput = trim($request->input('email') ?? $request->input('username') ?? '');
+        // ១. ទទួលយក student_id ជាអាទិភាព (ឬ email/username បើមានប្រើដដែល)
+        $loginInput = trim(
+            $request->input('student_id') ?? 
+            $request->input('email') ?? 
+            $request->input('username') ?? 
+            ''
+        );
 
         $validator = Validator::make($request->all(), [
             'password' => 'required|string',
@@ -98,35 +110,55 @@ class AuthController extends Controller
 
         if (!$loginInput || $validator->fails()) {
             return response()->json([
-                'message' => 'សូមបញ្ចូល Email/Username និង Password ឱ្យបានត្រឹមត្រូវ',
-                'detail'  => 'Email/username and password are required',
+                'message' => 'សូមបញ្ចូល លេខសម្គាល់សិស្ស (Student ID) និង Password ឱ្យបានត្រឹមត្រូវ',
+                'detail'  => 'Student ID/Email and password are required',
                 'errors'  => $validator->errors(),
             ], 422);
         }
 
-        // ស្វែងរក User ដោយសុវត្ថិភាព មិនឱ្យមាន Error column username does not exist
+        // ២. ស្វែងរក User ដោយផ្តល់អាទិភាពទៅ student_id មុនគេ
         $user = null;
-        if (filter_var($loginInput, FILTER_VALIDATE_EMAIL) || str_contains($loginInput, '@')) {
-            $user = User::where('email', $loginInput)->first();
-        } else {
-            $user = User::where('name', $loginInput)->orWhere('email', $loginInput)->first();
-            if (!$user) {
-                try {
-                    $user = User::where('username', $loginInput)->first();
-                } catch (\Throwable $e) {
-                    // បើគ្មាន Column username ក្នុង PostgreSQL មិនឱ្យ Crash ឡើយ
+        try {
+            if (Schema::hasColumn('users', 'student_id')) {
+                $user = User::where('student_id', $loginInput)->first();
+            }
+        } catch (\Throwable $e) {}
+
+        // ស្វែងរកតាមតារាង students (student_code)
+        if (!$user) {
+            try {
+                $student = \App\Models\Student::where('student_code', $loginInput)->first();
+                if ($student && $student->user_id) {
+                    $user = User::find($student->user_id);
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        // ៣. បើរកមិនឃើញតាម student_id ទេ សូមរកតាម email ឬ username វិញ (សម្រាប់ Admin)
+        if (!$user) {
+            if (filter_var($loginInput, FILTER_VALIDATE_EMAIL) || str_contains($loginInput, '@')) {
+                $user = User::where('email', $loginInput)->first();
+            } else {
+                $user = User::where('name', $loginInput)->orWhere('email', $loginInput)->first();
+                if (!$user) {
+                    try {
+                        $user = User::where('username', $loginInput)->first();
+                    } catch (\Throwable $e) {
+                        // បើគ្មាន Column username ក្នុង Database មិនឱ្យ Crash ឡើយ
+                    }
                 }
             }
         }
 
+        // ៤. ផ្ទៀងផ្ទាត់ Password
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Email ឬ Password មិនត្រឹមត្រូវឡើយ',
-                'detail'  => 'Invalid email or password',
+                'message' => 'លេខសម្គាល់សិស្ស ឬ Password មិនត្រឹមត្រូវឡើយ',
+                'detail'  => 'Invalid credentials',
             ], 401);
         }
 
-        // ពិនិត្យមើលស្ថានភាព Active របស់គណនី (ប្រសិនបើមាន field is_active)
+        // ៥. ពិនិត្យមើលស្ថានភាព Active
         if (isset($user->is_active) && !$user->is_active) {
             return response()->json([
                 'message' => 'គណនីរបស់អ្នកត្រូវបានផ្អាកដំណើរការជាបណ្តោះអាសន្ន',
@@ -134,25 +166,42 @@ class AuthController extends Controller
             ], 403);
         }
 
-        // បង្កើត Sanctum Token
+        // ៦. បង្កើត Sanctum Token
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        // ទាញយក Roles និង Permissions (ប្រសិនបើប្រើ Spatie)
         $roles = method_exists($user, 'getRoleNames') ? $user->getRoleNames() : [];
         $permissions = method_exists($user, 'getAllPermissions') ? $user->getAllPermissions()->pluck('name') : [];
+
+        $studentModel = null;
+        try {
+            $studentModel = $user->student ? $user->student : \App\Models\Student::where('user_id', $user->id)->orWhere('student_code', $user->student_id)->first();
+            if ($studentModel && $studentModel->classroom_id) {
+                $studentModel->loadMissing('classroom');
+            }
+        } catch (\Throwable $e) {}
 
         return response()->json([
             'message'      => 'ចូលប្រព័ន្ធបានជោគជ័យ',
             'access_token' => $token,
             'token_type'   => 'Bearer',
             'user'         => [
-                'id'          => $user->id,
+                'id'          => $studentModel ? $studentModel->id : $user->id,
+                'user_id'     => $user->id,
                 'name'        => $user->name ?? $user->username ?? '',
+                'nameKh'      => $studentModel ? ($studentModel->full_name_km ?? $user->name) : $user->name,
+                'nameEn'      => $studentModel ? ($studentModel->full_name_en ?? $user->name) : $user->name,
+                'student_id'  => $studentModel ? ($studentModel->student_code ?? $user->student_id) : ($user->student_id ?? 'STU001'),
                 'username'    => $user->username ?? $user->name ?? '',
                 'email'       => $user->email,
-                'user_type'   => $user->user_type ?? 'admin',
+                'gender'      => $studentModel ? $studentModel->gender : 'male',
+                'dob'         => $studentModel ? $studentModel->dob : null,
+                'grade'       => $studentModel && $studentModel->classroom ? $studentModel->classroom->name : '12A',
+                'classroom'   => $studentModel ? $studentModel->classroom : null,
+                'phone'       => $studentModel ? $studentModel->parent_phone : '',
+                'user_type'   => $user->user_type ?? ($studentModel ? 'student' : 'admin'),
                 'roles'       => $roles,
                 'permissions' => $permissions,
+                'student'     => $studentModel,
             ],
         ], 200);
     }
@@ -181,15 +230,33 @@ class AuthController extends Controller
         $roles = method_exists($user, 'getRoleNames') ? $user->getRoleNames() : [];
         $permissions = method_exists($user, 'getAllPermissions') ? $user->getAllPermissions()->pluck('name') : [];
 
+        $studentModel = null;
+        try {
+            $studentModel = $user->student ? $user->student : \App\Models\Student::where('user_id', $user->id)->orWhere('student_code', $user->student_id)->first();
+            if ($studentModel && $studentModel->classroom_id) {
+                $studentModel->loadMissing('classroom');
+            }
+        } catch (\Throwable $e) {}
+
         return response()->json([
             'user' => [
-                'id'          => $user->id,
+                'id'          => $studentModel ? $studentModel->id : $user->id,
+                'user_id'     => $user->id,
                 'name'        => $user->name ?? $user->username ?? '',
+                'nameKh'      => $studentModel ? ($studentModel->full_name_km ?? $user->name) : $user->name,
+                'nameEn'      => $studentModel ? ($studentModel->full_name_en ?? $user->name) : $user->name,
+                'student_id'  => $studentModel ? ($studentModel->student_code ?? $user->student_id) : ($user->student_id ?? 'STU001'),
                 'username'    => $user->username ?? $user->name ?? '',
                 'email'       => $user->email,
-                'user_type'   => $user->user_type ?? '',
+                'gender'      => $studentModel ? $studentModel->gender : 'male',
+                'dob'         => $studentModel ? $studentModel->dob : null,
+                'grade'       => $studentModel && $studentModel->classroom ? $studentModel->classroom->name : '12A',
+                'classroom'   => $studentModel ? $studentModel->classroom : null,
+                'phone'       => $studentModel ? $studentModel->parent_phone : '',
+                'user_type'   => $user->user_type ?? ($studentModel ? 'student' : ''),
                 'roles'       => $roles,
                 'permissions' => $permissions,
+                'student'     => $studentModel,
             ],
         ], 200);
     }

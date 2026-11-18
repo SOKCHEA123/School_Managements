@@ -295,6 +295,12 @@ const AllStudents = () => {
                       <div className="text-xs text-slate-500 mt-0.5">
                         {student.full_name_en || '—'}
                       </div>
+                      {(student.user?.email || student.email) && (
+                        <div className="text-[11px] text-blue-600 dark:text-blue-400 font-mono mt-1 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block shrink-0"></span>
+                          <span className="truncate max-w-[180px]">{student.user?.email || student.email}</span>
+                        </div>
+                      )}
                     </td>
                     <td className="px-5 py-3">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium border ${

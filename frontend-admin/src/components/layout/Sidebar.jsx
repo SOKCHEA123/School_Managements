@@ -9,7 +9,7 @@ import {
   Bell, Database, Globe, Printer, Sparkles, TrendingUp,
   ArrowRightLeft, ShieldAlert, CreditCard, TrendingDown, RotateCcw,
   BookMarked, KeyRound, History, Download, Building, Image, User,
-  Calculator, Trophy, CheckCircle2, AlertCircle, DoorOpen, X,
+  Calculator, Trophy, CheckCircle2, AlertCircle, DoorOpen, X, FlaskConical,
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -83,6 +83,11 @@ const Sidebar = () => {
         { label: 'មុខវិជ្ជា', to: '/academics?tab=subjects', icon: BookOpen, subColor: 'text-sky-400' },
         { label: 'ឆ្នាំសិក្សា', to: '/academics?tab=academic-years', icon: Calendar, subColor: 'text-indigo-400' },
         { label: 'វេន & បន្ទប់', to: '/academics?tab=sections', icon: Layers, subColor: 'text-cyan-400' },
+        // ✅ កែសម្រួលឈ្មោះឱ្យកាន់តែស្តង់ដារ
+        { label: 'ថ្នាក់រៀនទូទៅ', to: '/academics?tab=general', icon: DoorOpen, subColor: 'text-emerald-400' },
+        { label: 'ថ្នាក់ប្រឡងឌីប្លូម', to: '/academics?tab=diploma', icon: Award, subColor: 'text-amber-400' },
+        { label: 'ផ្នែកវិទ្យាសាស្ត្រ', to: '/academics?tab=science', icon: FlaskConical, subColor: 'text-purple-400' },
+        { label: 'ផ្នែកសង្គម', to: '/academics?tab=social', icon: Globe, subColor: 'text-rose-400' },
       ],
     },
     {

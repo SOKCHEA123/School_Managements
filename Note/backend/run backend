@@ -1,2 +1,3 @@
-check api laravel 
-a
+
+command check API
+- php artisan route:list --path=api

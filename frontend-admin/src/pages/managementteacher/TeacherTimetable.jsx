@@ -20,6 +20,23 @@ const TeacherTimetable = () => {
     { key: 'saturday', label: 'សៅរ៍ (Sat)' },
   ];
 
+  const DAY_MAP = {
+    'ចន្ទ': 'monday',
+    'ច័ន្ទ': 'monday',
+    'monday': 'monday',
+    'អង្គារ': 'tuesday',
+    'tuesday': 'tuesday',
+    'ពុធ': 'wednesday',
+    'wednesday': 'wednesday',
+    'ព្រហស្បតិ៍': 'thursday',
+    'ព្រហ': 'thursday',
+    'thursday': 'thursday',
+    'សុក្រ': 'friday',
+    'friday': 'friday',
+    'សៅរ៍': 'saturday',
+    'saturday': 'saturday',
+  };
+
   // ទុកទិន្នន័យនេះជា Fallback បើ API មិនដំណើរការ
   const defaultSchedule = [
     { day: 'monday', time: '07:00 - 07:50 AM', subject: 'គណិតវិទ្យា', class: '12A', room: '101' },
@@ -70,7 +87,7 @@ const TeacherTimetable = () => {
       const res = await timetableService.getTeacherTimetable(teacherId);
       
       // ពិនិត្យមើលថាតើ API របស់អ្នកត្រឡប់ទិន្នន័យមកជាទម្រង់អ្វី
-      const data = res?.data?.data || res?.data || (Array.isArray(res) ? res : []);
+      const data = res?.schedule || res?.data?.schedule || res?.data?.data || res?.data || (Array.isArray(res) ? res : []);
       
       if (data && data.length > 0) {
         setSchedule(data);
@@ -155,8 +172,11 @@ const TeacherTimetable = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {days.map((day) => {
-              // ប្រើ `schedule` ជំនួស `defaultSchedule`
-              const daySlots = schedule.filter((s) => s.day === day.key);
+              // ប្រើ `schedule` និង map ឈ្មោះថ្ងៃជាភាសាខ្មែរ/អង់គ្លេស
+              const daySlots = schedule.filter((s) => {
+                const normDay = DAY_MAP[s.day?.toString().toLowerCase()] || DAY_MAP[s.day] || s.day;
+                return normDay === day.key;
+              });
               return (
                 <div
                   key={day.key}

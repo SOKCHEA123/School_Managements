@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Database Flowchart & ER Diagram</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mermaid.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <!-- Google Fonts: Kantumruy Pro & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', 'Kantumruy Pro', sans-serif;
+    }
+    .mermaid svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8">
+
+  <div class="max-w-7xl mx-auto space-y-8">
+    
+    <!-- Header Section -->
+    <header class="bg-slate-800/80 backdrop-blur border border-slate-700/80 rounded-2xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-400 text-sm font-semibold">
+          <span>📊</span> Database & System Architecture
+        </div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+          Flowchart & ER Diagram ប្រព័ន្ធគ្រប់គ្រងសាលារៀន
+        </h1>
+        <p class="text-slate-400 text-sm md:text-base">
+          ដ្យាក្រាមទំនាក់ទំនង Database (Primary Key & Foreign Key) និងលំហូរដំណើរការទិន្នន័យ (System Workflow)
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <button id="btnDownloadPNG" onclick="downloadAsPNG()" class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium shadow-lg shadow-blue-600/30 transition-all active:scale-95">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          ទាញយកជារូបភាព PNG
+        </button>
+
+        <button id="btnDownloadSVG" onclick="downloadAsSVG()" class="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-medium shadow-lg shadow-emerald-600/30 transition-all active:scale-95">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/></svg>
+          ទាញយកជា SVG
+        </button>
+
+        <button id="btnDownloadDrawio" onclick="downloadDrawioXML()" class="flex items-center gap-2 px-4 py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl font-medium shadow-lg shadow-amber-600/30 transition-all active:scale-95" title="អាចបើកកែក្នុង app.diagrams.net បាន">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          ទាញយក Draw.io (.drawio)
+        </button>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="flex gap-2 border-b border-slate-700 pb-2">
+      <button onclick="switchTab('er-diagram')" id="tab-btn-er" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-blue-600 text-white">
+        🗄️ Database ER Diagram (PK & FK)
+      </button>
+      <button onclick="switchTab('system-flowchart')" id="tab-btn-flow" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-slate-800 text-slate-400 hover:text-white">
+        🔄 System Process Flowchart
+      </button>
+      <button onclick="switchTab('table-details')" id="tab-btn-tables" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-slate-800 text-slate-400 hover:text-white">
+        📋 តារាងលម្អិត Columns
+      </button>
+    </div>
+
+    <!-- TAB 1: ER Diagram -->
+    <div id="tab-er-diagram" class="tab-content block">
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-xl overflow-x-auto">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <span>🔗</span> ប្លង់ទំនាក់ទំនងតារាង (Entity Relationship Diagram)
+          </h2>
+          <span class="text-xs text-slate-400 bg-slate-700/60 px-3 py-1 rounded-full">
+            🔑 PK = Primary Key | 🔗 FK = Foreign Key
+          </span>
+        </div>
+
+        <div id="diagram-container-er" class="mermaid bg-slate-900/90 p-8 rounded-xl border border-slate-700/50 flex justify-center">
+erDiagram
+    USERS ||--o| STUDENTS : "1 User per Student (user_id)"
+    USERS ||--o| TEACHERS : "1 User per Teacher (user_id)"
+    ACADEMIC_YEARS ||--o{ CLASSROOMS : "contains (academic_year_id)"
+    TEACHERS ||--o{ CLASSROOMS : "homeroom_teacher (teacher_id)"
+    CLASSROOMS ||--o{ STUDENTS : "enrolls (classroom_id)"
+    STUDENTS ||--o{ GRADES : "receives (student_id)"
+    SUBJECTS ||--o{ GRADES : "graded_for (subject_id)"
+    CLASSROOMS ||--o{ GRADES : "recorded_in (classroom_id)"
+    STUDENTS ||--o{ ATTENDANCES : "marked_for (student_id)"
+    CLASSROOMS ||--o{ ATTENDANCES : "recorded_in (classroom_id)"
+    TEACHERS ||--o{ ATTENDANCES : "recorded_by (teacher_id)"
+
+    USERS {
+        bigint id PK "🔑 Primary Key"
+        string name "ឈ្មោះគណនី"
+        string email "អុីមែល Login"
+        string password "ពាក្យសម្ងាត់ Hashed"
+        string role "តួនាទី (admin, teacher, student)"
+        boolean is_active "ស្ថានភាពគណនី"
+    }
+
+    ACADEMIC_YEARS {
+        bigint id PK "🔑 Primary Key"
+        string name "ឈ្មោះឆ្នាំសិក្សា (2025-2026)"
+        date start_date "ថ្ងៃចាប់ផ្ដើម"
+        date end_date "ថ្ងៃបញ្ចប់"
+        boolean is_current "ឆ្នាំបច្ចុប្បន្ន"
+    }
+
+    CLASSROOMS {
+        bigint id PK "🔑 Primary Key"
+        string name "ឈ្មោះថ្នាក់ (12A, 11B)"
+        string grade_level "កម្រិតថ្នាក់ (10, 11, 12)"
+        string stream "ផ្នែក (វិទ្យាសាស្ត្រ, សង្គម)"
+        string room_number "លេខបន្ទប់ (101, 201)"
+        bigint academic_year_id FK "🔗 ឆ្នាំសិក្សា"
+        bigint teacher_id FK "🔗 គ្រូបន្ទុកថ្នាក់"
+    }
+
+    STUDENTS {
+        bigint id PK "🔑 Primary Key"
+        string student_id_card "អត្តលេខ (STU001)"
+        string full_name_kh "ឈ្មោះខ្មែរ"
+        string full_name_en "ឈ្មោះឡាតាំង"
+        string gender "ភេទ (ប្រុស/ស្រី)"
+        date date_of_birth "ថ្ងៃខែឆ្នាំកំណើត"
+        string phone_number "លេខទូរស័ព្ទ"
+        string parent_name "ឈ្មោះអាណាព្យាបាល"
+        string parent_phone "ទូរស័ព្ទអាណាព្យាបាល"
+        bigint user_id FK "🔗 គណនី Login"
+        bigint classroom_id FK "🔗 ថ្នាក់រៀន"
+    }
+
+    TEACHERS {
+        bigint id PK "🔑 Primary Key"
+        string teacher_code "កូដគ្រូ (TCH001)"
+        string full_name_kh "ឈ្មោះខ្មែរ"
+        string full_name_en "ឈ្មោះឡាតាំង"
+        string gender "ភេទ"
+        string phone_number "លេខទូរស័ព្ទ"
+        string specialization "ឯកទេសបង្រៀន"
+        bigint user_id FK "🔗 គណនី Login"
+    }
+
+    SUBJECTS {
+        bigint id PK "🔑 Primary Key"
+        string code "កូដមុខវិជ្ជា (MATH, PHY)"
+        string name_kh "ឈ្មោះមុខវិជ្ជាខ្មែរ"
+        string name_en "ឈ្មោះមុខវិជ្ជាអង់គ្លេស"
+        string grade_level "កម្រិតថ្នាក់"
+    }
+
+    GRADES {
+        bigint id PK "🔑 Primary Key"
+        decimal score "ពិន្ទុ"
+        string grade_letter "និទ្ទេស (A, B, C...)"
+        string month "ខែប្រឡង"
+        string semester "ឆមាស (1, 2)"
+        bigint student_id FK "🔗 សិស្ស"
+        bigint subject_id FK "🔗 មុខវិជ្ជា"
+        bigint classroom_id FK "🔗 ថ្នាក់"
+    }
+
+    ATTENDANCES {
+        bigint id PK "🔑 Primary Key"
+        date date "កាលបរិច្ឆេទ"
+        string status "វត្តមាន (មាន, អវត្តមាន, ច្បាប់)"
+        string note "កំណត់សម្គាល់"
+        bigint student_id FK "🔗 សិស្ស"
+        bigint classroom_id FK "🔗 ថ្នាក់"
+        bigint teacher_id FK "🔗 គ្រូស្រង់វត្តមាន"
+    }
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: System Flowchart -->
+    <div id="tab-system-flowchart" class="tab-content hidden">
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-xl overflow-x-auto">
+        <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2 mb-4">
+          <span>🔄</span> លំហូរដំណើរការប្រព័ន្ធសាលា (School System Process Flowchart)
+        </h2>
+
+        <div id="diagram-container-flow" class="mermaid bg-slate-900/90 p-8 rounded-xl border border-slate-700/50 flex justify-center">
+flowchart TD
+    Start(["🚀 ចាប់ផ្តើមប្រព័ន្ធ (System Startup)"]) --> Auth{"🔐 ផ្ទៀងផ្ទាត់គណនី<br/>(Authentication)"}
+
+    %% Roles Branching
+    Auth -->|Admin / នាយក| AdminDash["🖥️ ផ្ទាំងគ្រប់គ្រង Admin (Dashboard)"]
+    Auth -->|Teacher / គ្រូ| TeacherDash["👨‍🏫 ផ្ទាំងគ្រប់គ្រងគ្រូ (Teacher Portal)"]
+    Auth -->|Student / សិស្ស| StudentDash["🎓 ផ្ទាំងមើលពិន្ទុ & ព័ត៌មានសិស្ស"]
+
+    %% Admin Setup Flow
+    subgraph AdminActions [" ⚙️ រៀបចំរចនាសម្ព័ន្ធសាលា (Admin Workflow) "]
+        AdminDash --> AY["📅 បង្កើតឆ្នាំសិក្សា<br/>(Academic Years)"]
+        AY --> CR["🏫 បង្កើតថ្នាក់រៀន<br/>(Classrooms: 12A, 11B)"]
+        CR --> TCH["👨‍🏫 បញ្ចូលទិន្នន័យគ្រូ & បង្កើត Account<br/>(Teachers + Users)"]
+        CR --> STU["👨‍🎓 បញ្ចូលសិស្សថ្មី & បង្កើត Login Portal<br/>(Students + Users)"]
+        STU --> SUB["📚 បញ្ចូលមុខវិជ្ជា & កម្រិតសិក្សា<br/>(Subjects)"]
+    end
+
+    %% Daily Operations
+    subgraph DailyOperations [" 📝 ប្រតិបត្តិការប្រចាំថ្ងៃ (Daily Operations) "]
+        TCH --> TakeAtt["📋 ស្រង់វត្តមានសិស្សប្រចាំថ្ងៃ<br/>(Attendances Table)"]
+        SUB --> InputGrade["📊 បញ្ចូលពិន្ទុប្រចាំខែ & ឆមាស<br/>(Grades Table)"]
+        TakeAtt --> SaveAtt[("💾 រក្សាទុកក្នុង PostgreSQL")]
+        InputGrade --> SaveGrades[("💾 រក្សាទុកក្នុង PostgreSQL")]
+    end
+
+    %% Student View
+    SaveAtt -.-> StudentDash
+    SaveGrades -.-> StudentDash
+    StudentDash --> ViewReport["📑 មើលតារាងចំណាត់ថ្នាក់ & លទ្ធផលប្រឡង"]
+    ViewReport --> Finish(["✅ បញ្ចប់កិច្ចការ"])
+
+    %% Style Classes
+    classDef main fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+    classDef action fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    classDef portal fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+    class AdminDash,TeacherDash,StudentDash portal;
+    class AY,CR,TCH,STU,SUB main;
+    class TakeAtt,InputGrade,ViewReport action;
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Table Details List -->
+    <div id="tab-table-details" class="tab-content hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Table: USERS -->
+        <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-slate-700/80 px-4 py-3 border-b border-slate-600 flex justify-between items-center">
+            <span class="font-bold text-blue-400">👤 USERS</span>
+            <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">Master Auth</span>
+          </div>
+          <div class="p-4 space-y-2 text-sm">
+            <div class="flex justify-between items-center"><span class="font-mono text-amber-400 font-semibold">🔑 id</span><span class="text-slate-400">bigint (PK)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">name</span><span class="text-slate-400">varchar</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">email</span><span class="text-slate-400">varchar (Unique)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">password</span><span class="text-slate-400">varchar (Hashed)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">role</span><span class="text-slate-400">admin/teacher/student</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">is_active</span><span class="text-slate-400">boolean</span></div>
+          </div>
+        </div>
+
+        <!-- Table: STUDENTS -->
+        <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-slate-700/80 px-4 py-3 border-b border-slate-600 flex justify-between items-center">
+            <span class="font-bold text-emerald-400">🎓 STUDENTS</span>
+            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Core Entity</span>
+          </div>
+          <div class="p-4 space-y-2 text-sm">
+            <div class="flex justify-between items-center"><span class="font-mono text-amber-400 font-semibold">🔑 id</span><span class="text-slate-400">bigint (PK)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 user_id</span><span class="text-slate-400">FK -> users.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 classroom_id</span><span class="text-slate-400">FK -> classrooms.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">student_id_card</span><span class="text-slate-400">varchar (STU001)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">full_name_kh</span><span class="text-slate-400">varchar</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">full_name_en</span><span class="text-slate-400">varchar</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">gender</span><span class="text-slate-400">varchar</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">date_of_birth</span><span class="text-slate-400">date</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">phone_number</span><span class="text-slate-400">varchar</span></div>
+          </div>
+        </div>
+
+        <!-- Table: CLASSROOMS -->
+        <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-slate-700/80 px-4 py-3 border-b border-slate-600 flex justify-between items-center">
+            <span class="font-bold text-purple-400">🏫 CLASSROOMS</span>
+            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">Structure</span>
+          </div>
+          <div class="p-4 space-y-2 text-sm">
+            <div class="flex justify-between items-center"><span class="font-mono text-amber-400 font-semibold">🔑 id</span><span class="text-slate-400">bigint (PK)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 academic_year_id</span><span class="text-slate-400">FK -> academic_years.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 teacher_id</span><span class="text-slate-400">FK -> teachers.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">name</span><span class="text-slate-400">varchar (12A, 11B)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">grade_level</span><span class="text-slate-400">varchar (10, 11, 12)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">stream</span><span class="text-slate-400">Science / Social</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">room_number</span><span class="text-slate-400">varchar (101, 201)</span></div>
+          </div>
+        </div>
+
+        <!-- Table: TEACHERS -->
+        <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-slate-700/80 px-4 py-3 border-b border-slate-600 flex justify-between items-center">
+            <span class="font-bold text-sky-400">👨‍🏫 TEACHERS</span>
+            <span class="text-xs bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded">Faculty</span>
+          </div>
+          <div class="p-4 space-y-2 text-sm">
+            <div class="flex justify-between items-center"><span class="font-mono text-amber-400 font-semibold">🔑 id</span><span class="text-slate-400">bigint (PK)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 user_id</span><span class="text-slate-400">FK -> users.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">teacher_code</span><span class="text-slate-400">varchar (TCH01)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">full_name_kh</span><span class="text-slate-400">varchar</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">full_name_en</span><span class="text-slate-400">varchar</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">specialization</span><span class="text-slate-400">varchar</span></div>
+          </div>
+        </div>
+
+        <!-- Table: GRADES -->
+        <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-slate-700/80 px-4 py-3 border-b border-slate-600 flex justify-between items-center">
+            <span class="font-bold text-yellow-400">📊 GRADES</span>
+            <span class="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded">Scores</span>
+          </div>
+          <div class="p-4 space-y-2 text-sm">
+            <div class="flex justify-between items-center"><span class="font-mono text-amber-400 font-semibold">🔑 id</span><span class="text-slate-400">bigint (PK)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 student_id</span><span class="text-slate-400">FK -> students.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 subject_id</span><span class="text-slate-400">FK -> subjects.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 classroom_id</span><span class="text-slate-400">FK -> classrooms.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">score</span><span class="text-slate-400">decimal(5,2)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">grade_letter</span><span class="text-slate-400">varchar (A-F)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">month</span><span class="text-slate-400">varchar</span></div>
+          </div>
+        </div>
+
+        <!-- Table: ATTENDANCES -->
+        <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-slate-700/80 px-4 py-3 border-b border-slate-600 flex justify-between items-center">
+            <span class="font-bold text-rose-400">📋 ATTENDANCES</span>
+            <span class="text-xs bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded">Tracking</span>
+          </div>
+          <div class="p-4 space-y-2 text-sm">
+            <div class="flex justify-between items-center"><span class="font-mono text-amber-400 font-semibold">🔑 id</span><span class="text-slate-400">bigint (PK)</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 student_id</span><span class="text-slate-400">FK -> students.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 classroom_id</span><span class="text-slate-400">FK -> classrooms.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono text-indigo-400 font-semibold">🔗 teacher_id</span><span class="text-slate-400">FK -> teachers.id</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">date</span><span class="text-slate-400">date</span></div>
+            <div class="flex justify-between items-center"><span class="font-mono">status</span><span class="text-slate-400">present/absent/permission</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Guide -->
+    <footer class="text-center text-xs text-slate-500 pt-6 border-t border-slate-800">
+      School Management System &bull; Database Architecture &bull; PostgreSQL & Laravel 11
+    </footer>
+
+  </div>
+
+  <!-- JavaScript for Tabs & Downloads -->
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0f172a',
+        primaryColor: '#1e293b',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#3b82f6',
+        lineColor: '#60a5fa',
+        secondaryColor: '#1e1b4b',
+        tertiaryColor: '#0f172a'
+      }
+    });
+
+    let currentTab = 'er-diagram';
+
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+      // Update button styles
+      ['er', 'flow', 'tables'].forEach(key => {
+        const btn = document.getElementById('tab-btn-' + key);
+        if ((key === 'er' && tabId === 'er-diagram') ||
+            (key === 'flow' && tabId === 'system-flowchart') ||
+            (key === 'tables' && tabId === 'table-details')) {
+          btn.className = 'px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-blue-600 text-white';
+        } else {
+          btn.className = 'px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-slate-800 text-slate-400 hover:text-white';
+        }
+      });
+    }
+
+    // Download active diagram as SVG
+    function downloadAsSVG() {
+      const containerId = currentTab === 'system-flowchart' ? 'diagram-container-flow' : 'diagram-container-er';
+      const container = document.getElementById(containerId);
+      const svg = container ? container.querySelector('svg') : null;
+      if (!svg) {
+        alert('សូមជ្រើសរើសផ្ទាំងដ្យាក្រាមដើម្បីទាញយក!');
+        return;
+      }
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = `${currentTab}_diagram.svg`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+    }
+
+    // Download active diagram as high-res PNG
+    function downloadAsPNG() {
+      const containerId = currentTab === 'system-flowchart' ? 'diagram-container-flow' : 'diagram-container-er';
+      const container = document.getElementById(containerId);
+      const svg = container ? container.querySelector('svg') : null;
+      if (!svg) {
+        alert('សូមជ្រើសរើសផ្ទាំងដ្យាក្រាមដើម្បីទាញយក!');
+        return;
+      }
+
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      // Get svg dimensions
+      const bbox = svg.getBoundingClientRect();
+      const scale = 2; // high resolution scale
+      const width = (bbox.width || 1200) * scale;
+      const height = (bbox.height || 800) * scale;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      img.onload = function () {
+        ctx.fillStyle = '#0f172a'; // dark background
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = `${currentTab}_diagram.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      };
+
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      img.src = URL.createObjectURL(svgBlob);
+    }
+
+    // Download Draw.io Compatible XML file
+    function downloadDrawioXML() {
+      const xmlContent = `<mxfile host="app.diagrams.net" modified="2026-11-18T00:00:00.000Z" agent="Antigravity" version="21.0.0">
+  <diagram id="school-db" name="School Database">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- USERS -->
+        <mxCell id="tbl_users" value="users&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;name : varchar&#xa;email : varchar&#xa;role : varchar&#xa;password : varchar" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="180" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- STUDENTS -->
+        <mxCell id="tbl_students" value="students&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;# user_id : bigint [FK]&#xa;# classroom_id : bigint [FK]&#xa;student_id_card : varchar&#xa;full_name_kh : varchar&#xa;full_name_en : varchar&#xa;gender : varchar&#xa;dob : date" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="60" width="200" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- CLASSROOMS -->
+        <mxCell id="tbl_classrooms" value="classrooms&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;# academic_year_id : bigint [FK]&#xa;# teacher_id : bigint [FK]&#xa;name : varchar&#xa;grade_level : varchar&#xa;stream : varchar&#xa;room_number : varchar" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#ffe6cc;strokeColor=#d79b00;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="60" width="220" height="190" as="geometry"/>
+        </mxCell>
+
+        <!-- ACADEMIC YEARS -->
+        <mxCell id="tbl_years" value="academic_years&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;name : varchar&#xa;start_date : date&#xa;end_date : date&#xa;is_current : boolean" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="80" width="180" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- TEACHERS -->
+        <mxCell id="tbl_teachers" value="teachers&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;# user_id : bigint [FK]&#xa;teacher_code : varchar&#xa;full_name_kh : varchar&#xa;full_name_en : varchar&#xa;phone_number : varchar&#xa;specialization : varchar" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="340" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- GRADES -->
+        <mxCell id="tbl_grades" value="grades&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;# student_id : bigint [FK]&#xa;# subject_id : bigint [FK]&#xa;# classroom_id : bigint [FK]&#xa;score : decimal&#xa;grade_letter : varchar&#xa;month : varchar" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="340" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- ATTENDANCES -->
+        <mxCell id="tbl_att" value="attendances&#xa;-------------------&#xa;+ id : bigint [PK]&#xa;# student_id : bigint [FK]&#xa;# classroom_id : bigint [FK]&#xa;# teacher_id : bigint [FK]&#xa;date : date&#xa;status : varchar&#xa;note : text" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="200" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- Connectors -->
+        <mxCell id="c1" edge="1" parent="1" source="tbl_users" target="tbl_students" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3b82f6;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" edge="1" parent="1" source="tbl_classrooms" target="tbl_students" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" edge="1" parent="1" source="tbl_years" target="tbl_classrooms" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" edge="1" parent="1" source="tbl_students" target="tbl_grades" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="c5" edge="1" parent="1" source="tbl_students" target="tbl_att" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8b5cf6;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>`;
+
+      const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = 'school_database_drawio.drawio';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

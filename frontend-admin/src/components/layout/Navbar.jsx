@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Menu, Moon, Sun, LogOut, User, KeyRound, ChevronDown,
-  Bell, HelpCircle, Settings, ShieldCheck, Search, X, Command,
+  Bell, HelpCircle, Search, X, Command,
 } from 'lucide-react';
 import API from '../../services/api';
 import { useApp } from '../../context/AppContext';
@@ -241,8 +241,6 @@ const Navbar = () => {
                 {/* Menu Items... (ដាក់ដដែល) */}
                 <button onClick={() => { setIsDropdownOpen(false); navigate('/profile'); }} className="w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white"><User className="w-4 h-4 text-cyan-400" /> ព័ត៌មានផ្ទាល់ខ្លួន</button>
                 <button onClick={() => { setIsDropdownOpen(false); navigate('/change-password'); }} className="w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white"><KeyRound className="w-4 h-4 text-amber-400" /> ផ្លាស់ប្តូរពាក្យសម្ងាត់</button>
-                <button onClick={() => { setIsDropdownOpen(false); navigate('/security'); }} className="w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white"><ShieldCheck className="w-4 h-4 text-emerald-400" /> សុវត្ថិភាពគណនី</button>
-                <button onClick={() => { setIsDropdownOpen(false); navigate('/settings'); }} className="w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white"><Settings className="w-4 h-4 text-violet-400" /> ការកំណត់ប្រព័ន្ធ</button>
                 <div className="h-px w-full bg-[#2a3163] my-1.5" />
                 <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3.5 py-2 text-sm text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"><LogOut className="w-4 h-4" /> {t?.logout || 'ចាកចេញ'}</button>
               </div>

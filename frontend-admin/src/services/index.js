@@ -1,25 +1,25 @@
+// Main API Client
 import API from './api';
 
 export { API };
 export default API;
 
-export * from './authService';
-export * from './dashboardService';
-export * from './academicService';
-export * from './studentService';
-export * from './teacherService';
-export * from './parentService';
-export * from './attendanceService';
-export * from './examService';
-export * from './gradeService';
-export * from './timetableService';
-export * from './studentServicesService';
-export * from './financeService';
-export * from './libraryService';
-export * from './communicationService';
-export * from './reportService';
-export * from './securityService';
-export * from './settingsService';
-export * from './portalService';
-export * from './userService';
-
+// Re-export from organized module folders
+export * from './api';
+export * from './auth';
+export * from './dashboard';
+export * from './academic';
+export * from './student';
+export * from './teacher';
+export * from './parent';
+export * from './attendance';
+export * from './timetable';
+export * from './exam';
+export * from './finance';
+export * from './library';
+export * from './communication';
+export * from './report';
+export * from './security';
+export * from './settings';
+export * from './user';
+export * from './portal';

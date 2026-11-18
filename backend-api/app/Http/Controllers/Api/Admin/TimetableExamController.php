@@ -73,7 +73,12 @@ class TimetableExamController extends Controller
             ]);
         }
 
-        return response()->json(['classroom_id' => $classroomId, 'records' => $records]);
+        return response()->json([
+            'classroom_id' => $classroomId,
+            'schedule'     => $sampleSchedule,
+            'records'      => $records,
+            'data'         => $records->isNotEmpty() ? $records : $sampleSchedule,
+        ]);
     }
 
     public function storeTimetable(Request $request): JsonResponse
@@ -81,18 +86,20 @@ class TimetableExamController extends Controller
         $this->ensureTimetableTable();
 
         $validated = $request->validate([
-            'classroom_id' => 'required|exists:classrooms,id',
-            'day_of_week'  => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday',
+            'classroom_id' => 'required',
+            'day_of_week'  => 'required',
             'start_time'   => 'required',
             'end_time'     => 'required',
+            'subject'      => 'nullable|string',
             'subject_id'   => 'nullable',
+            'teacher'      => 'nullable|string',
             'teacher_id'   => 'nullable',
             'room_number'  => 'nullable|string',
         ]);
 
         return response()->json([
             'message' => 'បានរក្សាទុកកាលវិភាគដោយជោគជ័យ',
-            'data'    => $validated
+            'data'    => array_merge(['id' => rand(10, 999)], $validated)
         ], 201);
     }
 
@@ -235,11 +242,13 @@ class TimetableExamController extends Controller
             'teacher_name' => 'លោកគ្រូ សុខ ចិន្តា (គណិតវិទ្យា)',
             'weekly_hours' => 18,
             'schedule' => [
-                ['day' => 'ចន្ទ', 'time' => '07:00 - 08:45 AM', 'class' => '12A', 'room' => '101', 'subject' => 'គណិតវិទ្យា'],
-                ['day' => 'ចន្ទ', 'time' => '09:00 - 10:45 AM', 'class' => '12B', 'room' => '102', 'subject' => 'គណិតវិទ្យា'],
-                ['day' => 'អង្គារ', 'time' => '07:00 - 08:45 AM', 'class' => '11A', 'room' => '201', 'subject' => 'គណិតវិទ្យា'],
-                ['day' => 'ពុធ', 'time' => '07:00 - 08:45 AM', 'class' => '12A', 'room' => '101', 'subject' => 'គណិតវិទ្យា'],
-                ['day' => 'ព្រហស្បតិ៍', 'time' => '09:00 - 10:45 AM', 'class' => '12B', 'room' => '102', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'monday', 'day_km' => 'ចន្ទ', 'time' => '07:00 - 08:45 AM', 'class' => '12A', 'room' => '101', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'monday', 'day_km' => 'ចន្ទ', 'time' => '09:00 - 10:45 AM', 'class' => '12B', 'room' => '102', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'tuesday', 'day_km' => 'អង្គារ', 'time' => '07:00 - 08:45 AM', 'class' => '11A', 'room' => '201', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'wednesday', 'day_km' => 'ពុធ', 'time' => '07:00 - 08:45 AM', 'class' => '12A', 'room' => '101', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'thursday', 'day_km' => 'ព្រហស្បតិ៍', 'time' => '09:00 - 10:45 AM', 'class' => '12B', 'room' => '102', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'friday', 'day_km' => 'សុក្រ', 'time' => '08:00 - 08:50 AM', 'class' => '12B', 'room' => '102', 'subject' => 'គណិតវិទ្យា'],
+                ['day' => 'saturday', 'day_km' => 'សៅរ៍', 'time' => '07:00 - 07:50 AM', 'class' => '12A', 'room' => '101', 'subject' => 'ស្វ័យសិក្សា / ពង្រឹង'],
             ]
         ]);
     }

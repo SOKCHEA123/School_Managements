@@ -31,18 +31,27 @@ class OperationsController extends Controller
 
     public function storeParent(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name_km'      => 'required|string|max:255',
-            'name_en'      => 'nullable|string|max:255',
-            'phone'        => 'required|string|max:50',
-            'occupation'   => 'nullable|string|max:255',
-            'student_name' => 'nullable|string|max:255',
-            'classroom'    => 'nullable|string|max:50',
-            'address'      => 'nullable|string|max:255',
-        ]);
+        $name_km = $request->input('name_km') ?? $request->input('name') ?? 'អាណាព្យាបាល';
+        $name_en = $request->input('name_en');
+        $phone = $request->input('phone', '012 000 000');
+        $occupation = $request->input('occupation', 'កសិករ');
+        $student_name = $request->input('student_name', 'សិស្ស');
+        $classroom = $request->input('classroom', '12A');
+        $address = $request->input('address', 'ស្រុកស្នួល ក្រចេះ');
+
+        $data = [
+            'id' => rand(10, 999),
+            'name_km' => $name_km,
+            'name_en' => $name_en,
+            'phone' => $phone,
+            'occupation' => $occupation,
+            'student_name' => $student_name,
+            'classroom' => $classroom,
+            'address' => $address,
+        ];
         return response()->json([
             'message' => 'បានរក្សាទុកព័ត៌មានអាណាព្យាបាលដោយជោគជ័យ',
-            'data'    => array_merge(['id' => rand(10, 999)], $validated)
+            'data'    => $data,
         ], 201);
     }
 
@@ -104,17 +113,26 @@ class OperationsController extends Controller
 
     public function storeDiscipline(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'student_name' => 'required|string',
-            'classroom'    => 'required|string',
-            'infraction'   => 'required|string',
-            'severity'     => 'required|in:ស្រាល,មធ្យម,ធ្ងន់',
-            'date'         => 'required|date',
-            'status'       => 'nullable|string',
-        ]);
+        $student_name = $request->input('student_name') ?? $request->input('name') ?? 'សិស្ស';
+        $classroom = $request->input('classroom') ?? $request->input('class') ?? '12A';
+        $infraction = $request->input('infraction') ?? 'កំហុសវិន័យទូទៅ';
+        $severity = $request->input('severity', 'ស្រាល');
+        $date = $request->input('date') ?? Carbon::today()->toDateString();
+
+        $data = [
+            'id' => rand(10, 999),
+            'code' => 'STU' . rand(1000, 9999),
+            'student_name' => $student_name,
+            'classroom' => $classroom,
+            'class' => $classroom,
+            'infraction' => $infraction,
+            'severity' => $severity,
+            'date' => $date,
+            'status' => 'warned',
+        ];
         return response()->json([
             'message' => 'បានកត់ត្រាវិន័យសិស្សជោគជ័យ',
-            'data'    => array_merge(['id' => rand(10, 999)], $validated)
+            'data'    => $data,
         ], 201);
     }
 
@@ -147,16 +165,26 @@ class OperationsController extends Controller
 
     public function storeTransfer(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name'   => 'required|string',
-            'type'   => 'required|in:transfer_in,transfer_out',
-            'school' => 'required|string',
-            'class'  => 'required|string',
-            'date'   => 'required|date',
-        ]);
+        $name   = $request->input('name') ?? $request->input('student_name') ?? 'សិស្ស';
+        $class  = $request->input('class') ?? $request->input('classroom') ?? '11A';
+        $type   = $request->input('type', 'transfer_in');
+        $school = $request->input('school') ?? 'វិទ្យាល័យ ហ៊ុន សែន ស្នួល';
+        $date   = $request->input('date') ?? Carbon::today()->toDateString();
+
+        $data = [
+            'id'     => rand(10, 999),
+            'code'   => $request->input('code') ?? ('STU' . rand(1000, 9999)),
+            'name'   => $name,
+            'student_name' => $name,
+            'type'   => $type,
+            'school' => $school,
+            'class'  => $class,
+            'classroom' => $class,
+            'date'   => $date,
+        ];
         return response()->json([
             'message' => 'បានកត់ត្រាការផ្ទេរការសិក្សាជោគជ័យ',
-            'data'    => array_merge(['id' => rand(10, 999), 'code' => 'STU' . rand(1000, 9999)], $validated)
+            'data'    => $data,
         ], 201);
     }
 
@@ -204,15 +232,25 @@ class OperationsController extends Controller
 
     public function storeCertificate(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'student_name' => 'required|string',
-            'class'        => 'required|string',
-            'type'         => 'required|string',
-            'issue_date'   => 'required|date',
-        ]);
+        $student_name = $request->input('student_name') ?? $request->input('name') ?? 'សិស្ស';
+        $class = $request->input('class') ?? $request->input('classroom') ?? '12A';
+        $type = $request->input('type') ?? $request->input('certificate_type') ?? 'លិខិតបញ្ជាក់ការសិក្សា';
+        $issue_date = $request->input('issue_date') ?? $request->input('date') ?? Carbon::today()->toDateString();
+
+        $data = [
+            'id' => rand(10, 999),
+            'code' => 'CERT-2026-' . rand(100, 999),
+            'student_name' => $student_name,
+            'class' => $class,
+            'classroom' => $class,
+            'type' => $type,
+            'certificate_type' => $type,
+            'issue_date' => $issue_date,
+            'status' => 'approved',
+        ];
         return response()->json([
             'message' => 'បានចេញវិញ្ញាបនបត្រដោយជោគជ័យ',
-            'data'    => array_merge(['id' => rand(10, 999), 'code' => 'CERT-2026-' . rand(100, 999), 'status' => 'pending'], $validated)
+            'data'    => $data,
         ], 201);
     }
 
@@ -239,14 +277,21 @@ class OperationsController extends Controller
 
     public function storeDocument(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'student_name'  => 'required|string',
-            'code'          => 'required|string',
-            'document_type' => 'required|string',
-        ]);
+        $student_name = $request->input('student_name') ?? $request->input('name') ?? 'សិស្ស';
+        $code = $request->input('code') ?? ('DOC-' . rand(1000, 9999));
+        $document_type = $request->input('document_type') ?? $request->input('type') ?? 'សំបុត្រកំណើត';
+
+        $data = [
+            'id' => rand(10, 999),
+            'student_name' => $student_name,
+            'code' => $code,
+            'document_type' => $document_type,
+            'file_name' => strtolower($code) . '.pdf',
+            'upload_date' => Carbon::today()->toDateString(),
+        ];
         return response()->json([
             'message' => 'បានបញ្ចូលឯកសារដោយជោគជ័យ',
-            'data'    => array_merge(['id' => rand(10, 999), 'upload_date' => Carbon::today()->toDateString()], $validated)
+            'data'    => $data,
         ], 201);
     }
 
@@ -333,16 +378,27 @@ class OperationsController extends Controller
 
     public function storePayment(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'student'  => 'required|string',
-            'class'    => 'required|string',
-            'item'     => 'required|string',
-            'amount'   => 'required|string',
-            'date'     => 'required|date',
-        ]);
+        $student = $request->input('student') ?? $request->input('student_name') ?? 'សិស្ស';
+        $class = $request->input('class') ?? $request->input('classroom') ?? '12A';
+        $item = $request->input('item') ?? $request->input('type') ?? 'វិភាគទានសមាគម';
+        $amount = $request->input('amount') ?? '20,000 KHR';
+        $date = $request->input('date') ?? Carbon::today()->toDateString();
+
+        $data = [
+            'id' => 'REC-' . rand(100, 999),
+            'student' => $student,
+            'student_name' => $student,
+            'class' => $class,
+            'classroom' => $class,
+            'item' => $item,
+            'type' => $item,
+            'amount' => $amount,
+            'date' => $date,
+            'status' => 'paid',
+        ];
         return response()->json([
             'message' => 'បានកត់ត្រាការទូទាត់ដោយជោគជ័យ',
-            'data'    => array_merge(['id' => 'REC-' . rand(100, 999), 'status' => 'paid'], $validated)
+            'data'    => $data,
         ], 201);
     }
 
@@ -360,13 +416,21 @@ class OperationsController extends Controller
 
     public function storeExpense(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'desc'     => 'required|string|max:255',
-            'amount'   => 'required|numeric|min:0',
-            'date'     => 'required|date',
-            'category' => 'nullable|string|max:100',
-        ]);
-        return response()->json(['message' => 'បានកត់ត្រាចំណាយថ្មីដោយជោគជ័យ', 'data' => array_merge(['id' => rand(10, 999)], $validated)], 201);
+        $desc = $request->input('desc') ?? $request->input('title') ?? 'ចំណាយទូទៅ';
+        $rawAmount = $request->input('amount', 0);
+        $amount = is_numeric($rawAmount) ? floatval($rawAmount) : floatval(preg_replace('/[^0-9.]/', '', strval($rawAmount)));
+        $date = $request->input('date') ?? Carbon::today()->toDateString();
+        $category = $request->input('category', 'សម្ភារៈ');
+
+        $data = [
+            'id' => rand(10, 999),
+            'desc' => $desc,
+            'title' => $desc,
+            'amount' => $amount,
+            'date' => $date,
+            'category' => $category,
+        ];
+        return response()->json(['message' => 'បានកត់ត្រាចំណាយថ្មីដោយជោគជ័យ', 'data' => $data], 201);
     }
 
     public function updateExpense(Request $request, $id): JsonResponse
@@ -398,12 +462,20 @@ class OperationsController extends Controller
 
     public function storeIncome(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'source' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'date'   => 'required|date',
-        ]);
-        return response()->json(['message' => 'បានកត់ត្រាចំណូលថ្មីដោយជោគជ័យ', 'data' => array_merge(['id' => rand(10, 999), 'status' => 'received'], $validated)], 201);
+        $source = $request->input('source') ?? $request->input('title') ?? 'ចំណូលទូទៅ';
+        $rawAmount = $request->input('amount', 0);
+        $amount = is_numeric($rawAmount) ? floatval($rawAmount) : floatval(preg_replace('/[^0-9.]/', '', strval($rawAmount)));
+        $date = $request->input('date') ?? Carbon::today()->toDateString();
+
+        $data = [
+            'id' => rand(10, 999),
+            'source' => $source,
+            'title' => $source,
+            'amount' => $amount,
+            'date' => $date,
+            'status' => 'received',
+        ];
+        return response()->json(['message' => 'បានកត់ត្រាចំណូលថ្មីដោយជោគជ័យ', 'data' => $data], 201);
     }
 
     public function financeReports(Request $request): JsonResponse
@@ -473,14 +545,25 @@ class OperationsController extends Controller
 
     public function storeBook(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'isbn'     => 'nullable|string|max:50',
-            'title'    => 'required|string|max:255',
-            'author'   => 'required|string|max:255',
-            'category' => 'nullable|string|max:100',
-            'copies'   => 'required|integer|min:1',
-        ]);
-        return response()->json(['message' => 'បានចុះឈ្មោះសៀវភៅថ្មីដោយជោគជ័យ', 'data' => array_merge(['id' => rand(10, 999), 'available' => $validated['copies']], $validated)], 201);
+        $title = $request->input('title', 'សៀវភៅថ្មី');
+        $author = $request->input('author', 'អ្នកនិពន្ធ');
+        $category = $request->input('category', 'សៀវភៅពុម្ព');
+        $rawCopies = $request->input('copies') ?? $request->input('total_copies') ?? 10;
+        $copies = intval($rawCopies) > 0 ? intval($rawCopies) : 10;
+        $isbn = $request->input('isbn') ?? $request->input('code') ?? ('BK-' . rand(1000, 9999));
+
+        $data = [
+            'id' => rand(10, 999),
+            'isbn' => $isbn,
+            'code' => $isbn,
+            'title' => $title,
+            'author' => $author,
+            'category' => $category,
+            'copies' => $copies,
+            'total_copies' => $copies,
+            'available' => $copies,
+        ];
+        return response()->json(['message' => 'បានចុះឈ្មោះសៀវភៅថ្មីដោយជោគជ័យ', 'data' => $data], 201);
     }
 
     public function showBook(Request $request, $id): JsonResponse

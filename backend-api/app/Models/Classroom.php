@@ -12,6 +12,7 @@ class Classroom extends Model
         'name',
         'grade_level',
         'stream',
+        'room_number',
         'academic_year_id',
         'homeroom_teacher_id',
     ];

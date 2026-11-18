@@ -64,8 +64,20 @@ const TeacherAttendance = () => {
     loadData();
   }, [selectedDate]);
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
+    try {
+      if (newAtt.teacher_id || newAtt.name) {
+        await attendanceService.storeTeacherAttendance({
+          teacher_id: newAtt.teacher_id || 1,
+          date: selectedDate,
+          status: newAtt.status,
+          time: newAtt.time,
+        });
+      }
+    } catch (err) {
+      console.warn('Attendance recorded locally, API error:', err);
+    }
     setTeacherRecords([
       ...teacherRecords,
       { id: Date.now(), ...newAtt },

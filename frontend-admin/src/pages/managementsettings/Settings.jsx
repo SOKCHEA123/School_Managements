@@ -19,10 +19,10 @@ import {
 import { settingsService } from '../../services';
 import { useApp } from '../../context/AppContext';
 
-const Settings = () => {
+const Settings = ({ defaultTab }) => {
   const { lang, setLang } = useApp();
-  const [searchParams] = useSearchParams();
-  const currentTab = searchParams.get('tab') || 'info';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTab = searchParams.get('tab') || defaultTab || 'info';
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -164,6 +164,36 @@ const Settings = () => {
             ព័ត៌មានវិទ្យាល័យ Logo ភាសា ឆ្នាំសិក្សា ការបម្រុងទុក Database និង Profile គណនី
           </p>
         </div>
+      </div>
+
+      {/* Tabs Navigation */}
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 overflow-x-auto">
+        {[
+          { id: 'info', label: 'ព័ត៌មានវិទ្យាល័យ', icon: Building },
+          { id: 'branding', label: 'Logo & ស្លាកសញ្ញា', icon: Palette },
+          { id: 'language', label: 'ភាសា', icon: Globe },
+          { id: 'academic', label: 'ការកំណត់ការសិក្សា', icon: CalendarDays },
+          { id: 'backup', label: 'ការបម្រុងទុក Database', icon: Database },
+          { id: 'profile', label: 'គណនី Profile', icon: User },
+        ].map((tab) => {
+          const Icon = tab.icon;
+          const isActive = currentTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setSearchParams({ tab: tab.id })}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shrink-0 ${
+                isActive
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Alerts */}

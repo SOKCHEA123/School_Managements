@@ -1,3 +1,6 @@
 import React from 'react';
-import Settings from './Settings';
-export default function ProfileSettings() { return <Settings defaultTab="profile" />; }
+import PersonalInfo from '../profile/PersonalInfo';
+
+export default function ProfileSettings() {
+  return <PersonalInfo />;
+}

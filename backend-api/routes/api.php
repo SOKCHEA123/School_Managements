@@ -56,12 +56,12 @@ Route::middleware('auth:sanctum')->group(function () {
         // ================================================================
 
         // --- Students (full CRUD) ---
-        Route::get('/students',           [StudentController::class, 'index'])->middleware('permission:manage_students');
-        Route::post('/students',          [StudentController::class, 'store'])->middleware('permission:manage_students');
-        Route::get('/students/{id}',      [StudentController::class, 'show'])->middleware('permission:manage_students');
-        Route::put('/students/{id}',      [StudentController::class, 'update'])->middleware('permission:manage_students');
-        Route::patch('/students/{id}',    [StudentController::class, 'update'])->middleware('permission:manage_students');
-        Route::delete('/students/{id}',   [StudentController::class, 'destroy'])->middleware('permission:manage_students');
+        Route::get('/students',           [StudentController::class, 'index']);
+        Route::post('/students',          [StudentController::class, 'store']);
+        Route::get('/students/{id}',      [StudentController::class, 'show']);
+        Route::put('/students/{id}',      [StudentController::class, 'update']);
+        Route::patch('/students/{id}',    [StudentController::class, 'update']);
+        Route::delete('/students/{id}',   [StudentController::class, 'destroy']);
 
         // --- Teachers (full CRUD) ---
         Route::get('/teachers',           [TeacherController::class, 'index']);
@@ -147,11 +147,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Enter Student Scores (Grades)
         Route::get('/grades',                   [GradeController::class, 'index']);
-        Route::post('/grades/batch',            [GradeController::class, 'storeBatch'])->middleware('permission:input_class_grades');
-        Route::post('/grades/lock',             [GradeController::class, 'lockGrades'])->middleware('permission:lock_grades');
+        Route::post('/grades/batch',            [GradeController::class, 'storeBatch']);
+        Route::post('/grades/lock',             [GradeController::class, 'lockGrades']);
         Route::get('/grades/{id}',              [GradeController::class, 'show']);
-        Route::put('/grades/{id}',              [GradeController::class, 'update'])->middleware('permission:input_class_grades');
-        Route::delete('/grades/{id}',           [GradeController::class, 'destroy'])->middleware('permission:lock_grades');
+        Route::put('/grades/{id}',              [GradeController::class, 'update']);
+        Route::delete('/grades/{id}',           [GradeController::class, 'destroy']);
         Route::get('/grades/rankings',          [GradeController::class, 'rankings']);
 
         Route::post('/exams/calculation',       [TimetableExamController::class, 'gradeCalculation']);

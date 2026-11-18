@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net" modified="2026-11-18T03:05:00.000Z" agent="Antigravity" version="24.0.0" type="device">
+  <diagram id="school_database_diagram" name="School Database ERD">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="#f8fafc" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- TITLE HEADER -->
+        <mxCell id="title_header" value="ប្រព័ន្ធគ្រប់គ្រងសាលារៀន - Database Architecture &amp; ER Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="350" y="30" width="700" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="title_sub" value="🔑 PK: Primary Key | 🔗 FK: Foreign Key | PostgreSQL Database Relations" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=2;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="400" y="70" width="600" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: USERS -->
+        <mxCell id="tbl_users" value="USERS (គណនី Login)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;name : varchar(255)&#xa;email : varchar(255) [Unique]&#xa;password : varchar(255)&#xa;role : varchar(50)&#xa;is_active : boolean" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#e0e7ff;strokeColor=#4f46e5;strokeWidth=2;fontColor=#1e1b4b;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="220" height="170" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: STUDENTS -->
+        <mxCell id="tbl_students" value="STUDENTS (សិស្ស)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;🔗 user_id : bigint [FK]&#xa;🔗 classroom_id : bigint [FK]&#xa;student_id_card : varchar(50)&#xa;full_name_kh : varchar(255)&#xa;full_name_en : varchar(255)&#xa;gender : varchar(10)&#xa;date_of_birth : date&#xa;phone_number : varchar(50)&#xa;parent_name : varchar(255)&#xa;parent_phone : varchar(50)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;fontColor=#064e3b;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="380" y="140" width="240" height="260" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: CLASSROOMS -->
+        <mxCell id="tbl_classrooms" value="CLASSROOMS (ថ្នាក់រៀន)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;🔗 academic_year_id : bigint [FK]&#xa;🔗 teacher_id : bigint [FK]&#xa;name : varchar(50) (e.g. 12A)&#xa;grade_level : varchar(20) (10, 11, 12)&#xa;stream : varchar(50) (វិទ្យាសាស្ត្រ/សង្គម)&#xa;room_number : varchar(50) (101, 201)&#xa;capacity : integer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=2;fontColor=#78350f;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="720" y="140" width="250" height="210" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: ACADEMIC_YEARS -->
+        <mxCell id="tbl_academic_years" value="ACADEMIC_YEARS (ឆ្នាំសិក្សា)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;name : varchar(50) (2025-2026)&#xa;start_date : date&#xa;end_date : date&#xa;is_current : boolean" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;strokeWidth=2;fontColor=#0c4a6e;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="140" width="230" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: TEACHERS -->
+        <mxCell id="tbl_teachers" value="TEACHERS (លោកគ្រូ/អ្នកគ្រូ)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;🔗 user_id : bigint [FK]&#xa;teacher_code : varchar(50)&#xa;full_name_kh : varchar(255)&#xa;full_name_en : varchar(255)&#xa;gender : varchar(10)&#xa;phone_number : varchar(50)&#xa;specialization : varchar(100)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=2;fontColor=#7f1d1d;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="720" y="460" width="250" height="210" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: SUBJECTS -->
+        <mxCell id="tbl_subjects" value="SUBJECTS (មុខវិជ្ជា)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;code : varchar(50) (MATH, PHY)&#xa;name_kh : varchar(100)&#xa;name_en : varchar(100)&#xa;grade_level : varchar(20)&#xa;credit_or_hours : integer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#f3e8ff;strokeColor=#9333ea;strokeWidth=2;fontColor=#581c87;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="230" height="170" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: GRADES -->
+        <mxCell id="tbl_grades" value="GRADES (ពិន្ទុ &amp; ចំណាត់ថ្នាក់)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;🔗 student_id : bigint [FK]&#xa;🔗 subject_id : bigint [FK]&#xa;🔗 classroom_id : bigint [FK]&#xa;score : decimal(5,2)&#xa;grade_letter : varchar(5) (A, B, C)&#xa;month : varchar(50)&#xa;semester : varchar(20)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=2;fontColor=#713f12;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="380" y="460" width="240" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- TABLE: ATTENDANCES -->
+        <mxCell id="tbl_attendances" value="ATTENDANCES (វត្តមានសិស្ស)&#xa;---------------------------------------&#xa;🔑 id : bigint [PK]&#xa;🔗 student_id : bigint [FK]&#xa;🔗 classroom_id : bigint [FK]&#xa;🔗 teacher_id : bigint [FK]&#xa;date : date&#xa;status : varchar(20) (មាន/ច្បាប់/អវត្តមាន)&#xa;note : text" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#ffedd5;strokeColor=#ea580c;strokeWidth=2;fontColor=#7c2d12;rounded=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="380" y="720" width="240" height="190" as="geometry"/>
+        </mxCell>
+
+        <!-- CONNECTORS / RELATIONSHIPS -->
+        
+        <!-- Users -> Students (1 to 1) -->
+        <mxCell id="edge_user_student" value="1 : 1 (user_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;sourceX=1;sourceY=0.5;strokeColor=#4f46e5;strokeWidth=2;fontSize=11;fontColor=#4338ca;" edge="1" parent="1" source="tbl_users" target="tbl_students">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Users -> Teachers (1 to 1) -->
+        <mxCell id="edge_user_teacher" value="1 : 1 (user_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sourceX=0.5;sourceY=1;strokeColor=#4f46e5;strokeWidth=2;fontSize=11;fontColor=#4338ca;" edge="1" parent="1" source="tbl_users" target="tbl_teachers">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="170" y="420"/>
+              <mxPoint x="670" y="420"/>
+              <mxPoint x="670" y="565"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Academic Years -> Classrooms (1 to Many) -->
+        <mxCell id="edge_year_class" value="1 : N (academic_year_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;sourceX=0;sourceY=0.5;strokeColor=#0284c7;strokeWidth=2;fontSize=11;fontColor=#0369a1;" edge="1" parent="1" source="tbl_academic_years" target="tbl_classrooms">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Classrooms -> Students (1 to Many) -->
+        <mxCell id="edge_class_student" value="1 : N (classroom_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;sourceX=0;sourceY=0.5;strokeColor=#d97706;strokeWidth=2;fontSize=11;fontColor=#b45309;" edge="1" parent="1" source="tbl_classrooms" target="tbl_students">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Teachers -> Classrooms (Homeroom) -->
+        <mxCell id="edge_teacher_class" value="Homeroom (teacher_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;sourceX=0.5;sourceY=0;strokeColor=#dc2626;strokeWidth=2;fontSize=11;fontColor=#b91c1c;" edge="1" parent="1" source="tbl_teachers" target="tbl_classrooms">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Students -> Grades (1 to Many) -->
+        <mxCell id="edge_student_grade" value="1 : N (student_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sourceX=0.5;sourceY=1;strokeColor=#16a34a;strokeWidth=2;fontSize=11;fontColor=#15803d;" edge="1" parent="1" source="tbl_students" target="tbl_grades">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Subjects -> Grades (1 to Many) -->
+        <mxCell id="edge_subject_grade" value="1 : N (subject_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;sourceX=1;sourceY=0.5;strokeColor=#9333ea;strokeWidth=2;fontSize=11;fontColor=#7e22ce;" edge="1" parent="1" source="tbl_subjects" target="tbl_grades">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Students -> Attendances (1 to Many) -->
+        <mxCell id="edge_student_att" value="1 : N (student_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;sourceX=0.5;sourceY=1;strokeColor=#16a34a;strokeWidth=2;fontSize=11;fontColor=#15803d;" edge="1" parent="1" source="tbl_grades" target="tbl_attendances">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

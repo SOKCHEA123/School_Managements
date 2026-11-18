@@ -51,16 +51,32 @@ const Academics = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [cRes, sRes, yRes, secRes] = await Promise.all([
+      const [cRes, sRes, yRes, secRes] = await Promise.allSettled([
         academicService.getClassrooms(),
         academicService.getSubjects(),
         academicService.getAcademicYears(),
         academicService.getSections(),
       ]);
-      setClassrooms(cRes?.data || (Array.isArray(cRes) ? cRes : []));
-      setSubjects(sRes?.data || (Array.isArray(sRes) ? sRes : []));
-      setAcademicYears(yRes?.data || (Array.isArray(yRes) ? yRes : []));
-      setSections(secRes?.shifts || secRes?.data || []);
+
+      if (cRes.status === 'fulfilled') {
+        const val = cRes.value;
+        const list = Array.isArray(val) ? val : (val?.data || []);
+        setClassrooms(Array.isArray(list) ? list : []);
+      }
+      if (sRes.status === 'fulfilled') {
+        const val = sRes.value;
+        const list = Array.isArray(val) ? val : (val?.data || []);
+        setSubjects(Array.isArray(list) ? list : []);
+      }
+      if (yRes.status === 'fulfilled') {
+        const val = yRes.value;
+        const list = Array.isArray(val) ? val : (val?.data || []);
+        setAcademicYears(Array.isArray(list) ? list : []);
+      }
+      if (secRes.status === 'fulfilled') {
+        const val = secRes.value;
+        setSections(val?.shifts || val?.data || (Array.isArray(val) ? val : []));
+      }
     } catch (err) {
       console.error('Error fetching academic data:', err);
     } finally {
